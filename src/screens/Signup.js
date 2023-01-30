@@ -9,11 +9,13 @@ import {
 import React, { useState } from "react";
 import { Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import Colors from "../utils/Colors";
+import FormInput from "../components/FormInput";
 
 const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, SsetPhone] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
 
@@ -92,68 +94,35 @@ const Signup = () => {
             alignItems: "center",
           }}
         >
-          <TextInput
-            placeholder="Name"
-            keyboardType="alphanumeric"
-            style={{
-              height: 45,
-              width: "85%",
-              backgroundColor: "rgba(122, 111, 228, 0.2)",
-              padding: 5,
-              borderRadius: 10,
-              fontSize: 20,
-              fontWeight: "700",
-              marginBottom: 20,
-              borderWidth: 0.6,
-            }}
+          <FormInput
+            placeholder="Full name"
+            label="fullname"
+            value={fullname}
+            onChangeText={(value) => setFullname(value)}
           />
 
-          <TextInput
-            placeholder="Email"
+          <FormInput
+            placeholder="email"
+            label="Email"
+            value={email}
+            onChangeText={(value) => setEmail(value)}
             keyboardType="email-address"
-            style={{
-              height: 45,
-              width: "85%",
-              backgroundColor: "rgba(122, 111, 228, 0.2)",
-              padding: 5,
-              borderRadius: 10,
-              fontSize: 20,
-              fontWeight: "700",
-              marginBottom: 20,
-              borderWidth: 0.6,
-            }}
           />
-
-          <TextInput
-            placeholder="Phone Number"
+          <FormInput
+            placeholder="Phone number"
+            label="Email"
+            value={phone}
+            onChangeText={(value) => setPhone(value)}
             keyboardType="numeric"
-            style={{
-              height: 45,
-              width: "85%",
-              backgroundColor: "rgba(122, 111, 228, 0.2)",
-              padding: 5,
-              borderRadius: 10,
-              fontSize: 20,
-              fontWeight: "700",
-              marginBottom: 20,
-              borderWidth: 0.6,
-            }}
           />
 
-          <TextInput
+          <FormInput
             placeholder="Password"
+            label="Password"
+            value={password}
+            onChangeText={(value) => setPassword(value)}
             keyboardType="alphanumeric"
             secureTextEntry
-            style={{
-              height: 45,
-              width: "85%",
-              backgroundColor: "rgba(122, 111, 228, 0.2)",
-              padding: 5,
-              borderRadius: 10,
-              fontSize: 20,
-              fontWeight: "700",
-              borderWidth: 0.6,
-            }}
           />
 
           <TouchableOpacity
