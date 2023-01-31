@@ -1,13 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import React, { useState } from "react";
 import { Entypo } from "@expo/vector-icons";
 import FormInput from "../components/FormInput";
@@ -22,7 +15,7 @@ const Login = () => {
       return;
     }
     if (fullname.length < 3) {
-      Alert.alert("Name too short");
+      Alert.alert("Error", "Name too short");
       return;
     }
     if (password.length < 8) {
@@ -37,8 +30,8 @@ const Login = () => {
       {/* Logo section */}
       <Entypo
         name="folder-video"
-        size={50}
-        color={Colors.iconColor}
+        size={45}
+        color="#AE1E15"
         style={{ marginTop: 60, marginBottom: 0 }}
       />
       <Text
