@@ -11,6 +11,7 @@ import {
 import React, { useState } from "react";
 import { Entypo } from "@expo/vector-icons";
 import FormInput from "../components/FormInput";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 const Login = () => {
   const [fullname, setFullname] = useState("");
@@ -37,7 +38,7 @@ const Login = () => {
       <Entypo
         name="folder-video"
         size={50}
-        color="#AE1E15"
+        color={Colors.iconColor}
         style={{ marginTop: 60, marginBottom: 0 }}
       />
       <Text
