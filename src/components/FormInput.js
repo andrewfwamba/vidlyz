@@ -15,14 +15,15 @@ export default FormInput;
 
 const styles = StyleSheet.create({
   input: {
-    height: 45,
+    height: 40,
     width: "85%",
-    backgroundColor: "rgba(122, 111, 228, 0.2)",
+    backgroundColor: "rgba(255, 255, 255, 0.4)",
     padding: 5,
     borderRadius: 10,
-    fontSize: 20,
+    fontSize: 15,
     fontWeight: "700",
     marginBottom: 20,
     borderWidth: 0.6,
+    borderColor: "rgba(155, 146, 220, .3)",
   },
 });
