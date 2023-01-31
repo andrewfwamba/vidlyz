@@ -26,7 +26,7 @@ const Login = () => {
       return;
     }
     if (password.length < 8) {
-      Alert.alert("Error", "Pasword should be atleast 8 characters");
+      Alert.alert("Error", "Password should be atleast 8 characters");
       return;
     }
     Alert.alert("Success", "");
