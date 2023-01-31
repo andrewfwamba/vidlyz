@@ -5,6 +5,8 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
+  ScrollView,
+  KeyboardAvoidingView,
 } from "react-native";
 import React, { useState } from "react";
 import { Entypo } from "@expo/vector-icons";
@@ -25,7 +27,7 @@ const Signup = () => {
     }
   };
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       {/* Logo section */}
       <Entypo
         name="folder-video"
@@ -52,7 +54,6 @@ const Signup = () => {
       ></View>
       <View
         style={{
-          height: 530,
           width: "90%",
           backgroundColor: "rgba(0,0,0,0.2)",
           borderRadius: 5,
@@ -88,7 +89,8 @@ const Signup = () => {
         </View>
 
         {/* Login form input */}
-        <View
+        <KeyboardAvoidingView
+          behavior="height"
           style={{
             justifyContent: "center",
             alignItems: "center",
@@ -149,9 +151,10 @@ const Signup = () => {
               Sign up
             </Text>
           </TouchableOpacity>
-        </View>
+        </KeyboardAvoidingView>
 
         <TouchableOpacity
+          activeOpacity={0.6}
           style={{ width: "100%", height: 30 }}
           onPress={() => navigation.navigate("Login")}
         >
@@ -161,7 +164,7 @@ const Signup = () => {
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
