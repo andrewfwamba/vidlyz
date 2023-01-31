@@ -9,18 +9,18 @@ import {
 import React, { useState } from "react";
 import { Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import Colors from "../utils/Colors";
 import FormInput from "../components/FormInput";
+import { Colors } from "../utils/Colors";
 
 const Signup = () => {
-  const [name, setName] = useState("");
+  const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
 
   const signup = () => {
-    if (!email || !name || !phone || !password) {
+    if (!email || !fullname || !phone || !password) {
       Alert.alert("Empty fields", "Please fill all fields");
     }
   };
@@ -30,7 +30,7 @@ const Signup = () => {
       <Entypo
         name="folder-video"
         size={50}
-        color="#AE1E15"
+        color={Colors.iconColor}
         style={{ marginTop: 60, marginBottom: 0 }}
       />
       <Text
