@@ -10,7 +10,7 @@ const Home = () => {
       <View style={{ height: 50, backgroundColor: "#000" }}>
         <Entypo
           name="folder-video"
-          size={50}
+          size={24}
           color={Colors.iconColor}
           style={{ marginTop: 60, marginBottom: 0 }}
         />
@@ -18,7 +18,7 @@ const Home = () => {
       </View>
       {/* Label for video page */}
 
-      <Text>Browse Videos</Text>
+      <Text>Picks</Text>
 
       <View>
         <View style={{ height: 100, width: "80%" }}></View>
