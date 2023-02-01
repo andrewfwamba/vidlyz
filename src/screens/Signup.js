@@ -19,6 +19,7 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigation = useNavigation();
 
   const signup = () => {
@@ -90,7 +91,7 @@ const Signup = () => {
 
         {/* Login form input */}
         <KeyboardAvoidingView
-          behavior="height"
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={{
             justifyContent: "center",
             alignItems: "center",
