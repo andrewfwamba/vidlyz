@@ -7,8 +7,18 @@ import FormInput from "../components/FormInput";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 
 const Login = () => {
-  const [fullname, setFullname] = useState("");
-  const [password, setPassword] = useState("");
+  const [userInfo, setUserInfo] = useState({
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
+
+  const { email, password } = userInfo;
+
+  const handleOnChangeText = (value, fieldName) => {
+    setUserInfo({ ...userInfo, [fieldName]: value });
+  };
+
   const signin = () => {
     if (!fullname || !password) {
       Alert.alert("Empty fields", "Please input the required fields");
@@ -100,16 +110,14 @@ const Login = () => {
         >
           <FormInput
             placeholder="Full name"
-            label="fullname"
-            value={fullname}
-            onChangeText={(value) => setFullname(value)}
+            value={email}
+            onChangeText={(value) => handleOnChangeText(value, email)}
           />
 
           <FormInput
             placeholder="Password"
-            label="Password"
             value={password}
-            onChangeText={(value) => setPassword(value)}
+            onChangeText={(value) => handleOnChangeText(value, password)}
             secureTextEntry={true}
           />
 
