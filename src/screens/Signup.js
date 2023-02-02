@@ -15,16 +15,25 @@ import FormInput from "../components/FormInput";
 import { Colors } from "../utils/Colors";
 
 const Signup = () => {
-  const [fullname, setFullname] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
+  const [userInfo, setUserInfo] = useState({
+    fullname: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirmpassword: "",
+  });
+
   const [error, setError] = useState("");
   const navigation = useNavigation();
 
+  const { fullname, email, phone, password, confirmpassword } = userInfo;
+  const handleOnChangeText = (value, fieldName) => {
+    setUserInfo({ ...userInfo, [fieldName]: value });
+  };
+
   const signup = () => {
     if (!email || !fullname || !phone || !password) {
-      Alert.alert("Empty fields", "Please fill all fields");
+      setError("");
     }
   };
   return (
@@ -99,31 +108,35 @@ const Signup = () => {
         >
           <FormInput
             placeholder="Full name"
-            label="fullname"
             value={fullname}
-            onChangeText={(value) => setFullname(value)}
+            onChangeText={(value) => handleOnChangeText(value, fullname)}
           />
 
           <FormInput
             placeholder="email"
-            label="Email"
             value={email}
-            onChangeText={(value) => setEmail(value)}
+            onChangeText={(value) => handleOnChangeText(value, email)}
             keyboardType="email-address"
           />
           <FormInput
             placeholder="Phone number"
-            label="Email"
             value={phone}
-            onChangeText={(value) => setPhone(value)}
+            onChangeText={(value) => handleOnChangeText(value, phone)}
             keyboardType="numeric"
           />
 
           <FormInput
             placeholder="Password"
-            label="Password"
             value={password}
-            onChangeText={(value) => setPassword(value)}
+            onChangeText={(value) => handleOnChangeText(value, password)}
+            keyboardType="alphanumeric"
+            secureTextEntry
+          />
+
+          <FormInput
+            placeholder="Confirm password"
+            value={confirmpassword}
+            onChangeText={(value) => handleOnChangeText(value, confirmpassword)}
             keyboardType="alphanumeric"
             secureTextEntry
           />
