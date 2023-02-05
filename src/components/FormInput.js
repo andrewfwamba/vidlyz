@@ -4,15 +4,34 @@ import { Colors } from "../utils/Colors";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const FormInput = (props) => {
-  const { placeholder, iconName } = props;
+  const { placeholder, error, iconName, onFocus = () => {} } = props;
+  const [isFocused, setIsFocused] = React.useState(false);
   return (
-    <View style={styles.inputWrapper}>
+    <View
+      style={[
+        styles.inputWrapper,
+        {
+          borderColor: error
+            ? "red"
+            : isFocused
+            ? Colors.darkText
+            : "rgba(155, 146, 220, .3)",
+        },
+      ]}
+    >
       <Icon name={iconName} style={{ color: "gray", fontSize: 22 }} />
       <TextInput
         autoCorrect={false}
         {...props}
         placeholder={placeholder}
         style={styles.input}
+        onFocus={() => {
+          onFocus();
+          setIsFocused(true);
+        }}
+        onBlur={() => {
+          setIsFocused(false);
+        }}
       />
     </View>
   );
@@ -31,10 +50,10 @@ const styles = StyleSheet.create({
     borderWidth: 0.6,
     marginTop: 5,
     borderColor: "rgba(155, 146, 220, .3)",
+    overflow: "hidden",
   },
   input: {
-    height: 40,
-    width: "85%",
+    flex: 1,
     padding: 5,
     borderRadius: 10,
     fontSize: 15,
