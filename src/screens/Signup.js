@@ -15,29 +15,145 @@ import FormInput from "../components/FormInput";
 import { Colors } from "../utils/Colors";
 
 const Signup = () => {
-  const [userInfo, setUserInfo] = useState({
-    fullname: "",
-    email: "",
-    phone: "",
-    password: "",
-    confirmpassword: "",
-  });
+  // const [userInfo, setUserInfo] = useState({
+  //   fullname: "",
+  //   email: "",
+  //   phone: "",
+  //   password: "",
+  //   confirmpassword: "",
+  // });
+  const [fullname, setFullname] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmpassword, setConfirmpassword] = useState("");
 
   const [error, setError] = useState("");
+  const [nameError, setNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [confirmError, setConfirmError] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const navigation = useNavigation();
 
-  const { fullname, email, phone, password, confirmpassword } = userInfo;
-  const handleOnChangeText = (value, fieldName) => {
-    setUserInfo({ ...userInfo, [fieldName]: value });
+  // const { fullname, email, phone, password, confirmpassword } = userInfo;
+
+  // Validate fullname
+
+  const ValidateFullname = (fullname) => {
+    if (fullname.length >= 3) {
+      setFullname(fullname);
+      setNameError("");
+    } else {
+      setFullname(fullname);
+      setNameError("Enter a valid name");
+    }
   };
 
-  const signup = () => {
-    if (!email || !fullname || !phone || !password) {
-      setError("");
+  // Validate email
+  const validateEmail = (email) => {
+    const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (reg.test(email)) {
+      setEmail(email);
+      setEmailError("");
+      return true;
+    } else {
+      setEmail(email);
+      console.log("an error");
+
+      setEmailError("Please enter a valid email address.");
+
+      return false;
+    }
+  };
+
+  // Validate phone
+  const validatePhone = (phone) => {
+    if (phone.length >= 10) {
+      setPhone(phone);
+      setPhoneError("");
+      return true;
+    } else {
+      setPhone(phone);
+      setPhoneError("Enter valid phone number");
+      return false;
+    }
+  };
+
+  // Validate password
+  const validatePassword = (password) => {
+    if (password.length >= 8) {
+      setPassword(password);
+      setPasswordError("");
+      return true;
+    } else {
+      setPassword(password);
+      setPasswordError("Password must be at least 8 characters.");
+      console.log("now running");
+      return false;
+    }
+  };
+
+  // Check confirm password
+  const validateConfirmPassword = (confirmpassword) => {
+    if (confirmpassword == password) {
+      setConfirmpassword(confirmpassword);
+      setConfirmError("");
+      return true;
+    } else {
+      setConfirmpassword(confirmpassword);
+      setConfirmError("Password do not match");
+      return false;
+    }
+  };
+
+  // Attempt to combine validation
+
+  const validation = (password, email) => {
+    const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (password.length >= 8) {
+      setPassword(password);
+      setPasswordError("");
+      return true;
+    } else {
+      setPassword(password);
+      setPasswordError("Password must be at least 8 characters.");
+      console.log("now running");
+      return false;
+    }
+
+    if (reg.test(email)) {
+      setEmail(email);
+      setEmailError("");
+      console.log("running email");
+      return true;
+    } else {
+      setEmail(email);
+      console.log("an error");
+
+      setEmailError("Please enter a valid email address.");
+
+      return false;
+    }
+  };
+
+  const submitForm = async () => {
+    if (validateEmail) {
+      try {
+        console.log(email);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView
+      contentContainerStyle={styles.container}
+      vertical
+      showsVerticalScrollIndicator={false}
+    >
       {/* Logo section */}
       <Entypo
         name="folder-video"
@@ -58,7 +174,7 @@ const Signup = () => {
       <View
         style={{
           alignSelf: "center",
-          margin: 10,
+          margin: 5,
           width: "90%",
         }}
       ></View>
@@ -107,39 +223,65 @@ const Signup = () => {
           }}
         >
           <FormInput
+            iconName={"account"}
             placeholder="Full name"
             value={fullname}
-            onChangeText={(value) => handleOnChangeText(value, fullname)}
+            onChangeText={(fullname) => ValidateFullname(fullname)}
           />
+          {nameError !== "" && (
+            <Text style={styles.errortext}>{nameError}</Text>
+          )}
+          {error ? <Text style={{ color: "red" }}>{error}</Text> : null}
 
           <FormInput
             placeholder="email"
+            iconName={"email-outline"}
             value={email}
-            onChangeText={(value) => handleOnChangeText(value, email)}
+            onChangeText={(email) => validateEmail(email)}
+            onBlur={(email) => validation(email)}
             keyboardType="email-address"
+            autoCapitalize={false}
           />
+          {emailError !== "" && (
+            <Text style={styles.errortext}>{emailError}</Text>
+          )}
           <FormInput
             placeholder="Phone number"
+            iconName={"phone"}
             value={phone}
-            onChangeText={(value) => handleOnChangeText(value, phone)}
-            keyboardType="numeric"
+            onChangeText={(phone) => validatePhone(phone)}
+            keyboardType="phone-pad"
           />
+          {phoneError !== "" && (
+            <Text style={styles.errortext}>{phoneError}</Text>
+          )}
 
           <FormInput
             placeholder="Password"
+            iconName={"lock"}
             value={password}
-            onChangeText={(value) => handleOnChangeText(value, password)}
+            onChangeText={(password) => validatePassword(password)}
+            keyboardType="alphanumeric"
+            secureTextEntry
+          />
+          {passwordError !== "" && (
+            <Text style={styles.errortext}>{passwordError}</Text>
+          )}
+
+          <FormInput
+            placeholder="Confirm password"
+            iconName={"lock"}
+            value={confirmpassword}
+            onChangeText={(confirmpassword) =>
+              validateConfirmPassword(confirmpassword)
+            }
             keyboardType="alphanumeric"
             secureTextEntry
           />
 
-          <FormInput
-            placeholder="Confirm password"
-            value={confirmpassword}
-            onChangeText={(value) => handleOnChangeText(value, confirmpassword)}
-            keyboardType="alphanumeric"
-            secureTextEntry
-          />
+          {confirmError !== "" && (
+            <Text style={styles.errortext}>{confirmError}</Text>
+          )}
 
           <TouchableOpacity
             style={{
@@ -153,7 +295,7 @@ const Signup = () => {
               elevation: 5,
             }}
             activeOpacity={0.7}
-            onPress={signup}
+            onPress={submitForm}
           >
             <Text
               style={{
@@ -189,5 +331,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f0f0f7",
     alignItems: "center",
+  },
+  errortext: {
+    color: "red",
+    fontSize: 10,
   },
 });
