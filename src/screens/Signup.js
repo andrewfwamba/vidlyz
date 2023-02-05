@@ -249,7 +249,12 @@ const Signup = () => {
             placeholder="Phone number"
             iconName={"phone"}
             value={phone}
-            onChangeText={(phone) => validatePhone(phone)}
+            onChangeText={(phone) =>
+              validatePhone(
+                phone.replace(/[- #*;,N.<>\{\}\[\]\\\/]/gi, ""),
+                phone
+              )
+            }
             keyboardType="phone-pad"
           />
           {phoneError !== "" && (
