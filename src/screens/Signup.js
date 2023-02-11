@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { Entypo } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, validatePathConfig } from "@react-navigation/native";
 import FormInput from "../components/FormInput";
 import { Colors } from "../utils/Colors";
 
@@ -40,9 +40,25 @@ const Signup = () => {
 
   // const { fullname, email, phone, password, confirmpassword } = userInfo;
 
-  // Validate fullname
+  const validate = () => {
+    const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return (
+      (fullname.length >= 3) &
+      (phone.length >= 10) &
+      reg.test(email) &
+      (password.length >= 8) &
+      (confirmpassword == password)
+    );
+  };
 
-  const ValidateFullname = (fullname) => {
+  let btcolor;
+  if (validate()) {
+    btcolor = Colors.activebtn;
+  } else {
+    btcolor = Colors.disabledbtn;
+  }
+
+  const validateFullname = (fullname) => {
     if (fullname.length >= 3) {
       setFullname(fullname);
       setNameError("");
@@ -61,7 +77,6 @@ const Signup = () => {
       return true;
     } else {
       setEmail(email);
-      console.log("an error");
 
       setEmailError("Please enter a valid email address.");
 
@@ -91,7 +106,6 @@ const Signup = () => {
     } else {
       setPassword(password);
       setPasswordError("Password must be at least 8 characters.");
-      console.log("now running");
       return false;
     }
   };
@@ -111,33 +125,13 @@ const Signup = () => {
 
   // Attempt to combine validation
 
-  const validation = (password, email) => {
-    const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if (password.length >= 8) {
-      setPassword(password);
-      setPasswordError("");
-      return true;
-    } else {
-      setPassword(password);
-      setPasswordError("Password must be at least 8 characters.");
-      console.log("now running");
-      return false;
-    }
-
-    if (reg.test(email)) {
-      setEmail(email);
-      setEmailError("");
-      console.log("running email");
-      return true;
-    } else {
-      setEmail(email);
-      console.log("an error");
-
-      setEmailError("Please enter a valid email address.");
-
-      return false;
-    }
-  };
+  // const validation = (fullname, phone, email, password, confirmpassword) => {
+  //   ValidateFullname(fullname);
+  //   validatePhone(phone);
+  //   validateEmail(email);
+  //   validatePassword(password);
+  //   validateConfirmPassword(confirmpassword);
+  // };
 
   const submitForm = async () => {
     if (validateEmail) {
@@ -226,7 +220,7 @@ const Signup = () => {
             iconName={"account"}
             placeholder="Full name"
             value={fullname}
-            onChangeText={(fullname) => ValidateFullname(fullname)}
+            onChangeText={(fullname) => validateFullname(fullname)}
           />
           {nameError !== "" && (
             <Text style={styles.errortext}>{nameError}</Text>
@@ -238,7 +232,6 @@ const Signup = () => {
             iconName={"email-outline"}
             value={email}
             onChangeText={(email) => validateEmail(email)}
-            onBlur={(email) => validation(email)}
             keyboardType="email-address"
             autoCapitalize={false}
           />
@@ -291,16 +284,16 @@ const Signup = () => {
           <TouchableOpacity
             style={{
               margin: 20,
-              backgroundColor: "#001",
+              backgroundColor: btcolor,
               width: "80%",
               height: 40,
               justifyContent: "center",
               alignItems: "center",
               borderRadius: 10,
-              elevation: 5,
             }}
             activeOpacity={0.7}
             onPress={submitForm}
+            disabled={!validate()}
           >
             <Text
               style={{
