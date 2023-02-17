@@ -3,9 +3,12 @@ import Home from "../screens/Home";
 
 const Drawer = createDrawerNavigator();
 
-function MyDrawer() {
+export default function MyDrawer() {
   return (
-    <Drawer.Navigator initialRouteName="Home">
+    <Drawer.Navigator
+      initialRouteName="Home"
+      screenOptions={{ headerShown: false }}
+    >
       <Drawer.Screen name="Home" component={Home} />
       {/* <Drawer.Screen name="Article" component={Article} /> */}
     </Drawer.Navigator>
