@@ -15,13 +15,6 @@ import FormInput from "../components/FormInput";
 import { Colors } from "../utils/Colors";
 
 const Signup = () => {
-  // const [userInfo, setUserInfo] = useState({
-  //   fullname: "",
-  //   email: "",
-  //   phone: "",
-  //   password: "",
-  //   confirmpassword: "",
-  // });
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -134,9 +127,9 @@ const Signup = () => {
   // };
 
   const submitForm = async () => {
-    if (validateEmail) {
+    if (validate()) {
       try {
-        console.log(email);
+        navigation.navigate("Drawer");
       } catch (error) {
         console.log(error);
       }
