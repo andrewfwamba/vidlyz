@@ -8,21 +8,6 @@ import axios from "axios";
 const Home = () => {
   let [data, setData] = useState([]);
 
-  const fetch = async () => {
-    try {
-      let response = axios({
-        method: "GET",
-        url: "https://finalspaceapi.com/api/v0/episode",
-      });
-      setData(response);
-    } catch (error) {
-      console.log("error");
-    }
-  };
-  useEffect(() => {
-    fetch();
-    console.log(data);
-  });
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
@@ -56,10 +41,35 @@ const Home = () => {
         </View>
       </View>
       {/* Label for video page */}
-      <Text>Picks</Text>
-      <View>
-        <View style={{ height: 100, width: "80%" }}></View>
+      <Text style={{ fontFamily: "Poppins-Black" }}>Picks</Text>
+      <View
+        style={{
+          borderWidth: 1,
+          marginTop: 10,
+          borderColor: "green",
+          backgroundColor: "white",
+          height: 130,
+          width: "95%",
+          borderRadius: 5,
+          elevation: 5,
+        }}
+      >
+        <View>
+          <Text></Text>
+        </View>
       </View>
+      <View
+        style={{
+          borderWidth: 1,
+          marginTop: 10,
+          borderColor: "green",
+          backgroundColor: "white",
+          height: 130,
+          width: "95%",
+          borderRadius: 5,
+          elevation: 5,
+        }}
+      ></View>
     </View>
   );
 };
