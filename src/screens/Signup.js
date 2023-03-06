@@ -13,6 +13,7 @@ import { Entypo } from "@expo/vector-icons";
 import { useNavigation, validatePathConfig } from "@react-navigation/native";
 import FormInput from "../components/FormInput";
 import { Colors } from "../utils/Colors";
+import { useLogin } from "../context/loginProvider";
 
 const Signup = () => {
   const [fullname, setFullname] = useState("");
@@ -30,6 +31,7 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
 
   const navigation = useNavigation();
+  const { setLoginPending, setProfile } = useLogin();
 
   // const { fullname, email, phone, password, confirmpassword } = userInfo;
 
@@ -128,10 +130,37 @@ const Signup = () => {
 
   const submitForm = async () => {
     if (validate()) {
+      // try {
+      //   navigation.navigate("Drawer");
+      // } catch (error) {
+      //   console.log(error);
+      // }
       try {
-        navigation.navigate("Drawer");
+        setLoginPending(true);
+        const res = await client.post("/create-user", {
+          fullname,
+          email,
+          phone,
+          password,
+          confirmpassword,
+        });
+        console.log(res.data);
+        if (res.data.success) {
+          const signInRes = await signIn(userInfo.email, userInfo.password);
+
+          if (signInRes.data.success) {
+            navigation.dispatch(
+              StackActions.navigate("uploadimage", {
+                token: signInRes.data.token,
+                data: signInRes.data,
+              })
+            );
+            setProfile(signInRes.data.userInfo);
+          }
+          setLoginPending(false);
+        }
       } catch (error) {
-        console.log(error);
+        console.log(error.message);
       }
     }
   };
