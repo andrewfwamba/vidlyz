@@ -5,6 +5,9 @@ import React, { useEffect, useState } from "react";
 import { Entypo } from "@expo/vector-icons";
 import FormInput from "../components/FormInput";
 import { Colors } from "../utils/Colors";
+import { useLogin } from "../context/loginProvider";
+import axios from "axios";
+import { Loginuser } from "../api/client";
 
 const Login = () => {
   // const [userInfo, setUserInfo] = useState({
@@ -20,6 +23,7 @@ const Login = () => {
 
   // const { email, password } = userInfo;
 
+  const { setIsLoggedIn, setProfile } = useLogin();
   const handleOnChangeText = (value, fieldName) => {
     setUserInfo({ ...userInfo, [fieldName]: value });
   };
@@ -64,8 +68,25 @@ const Login = () => {
     btcolor = Colors.disabledbtn;
   }
 
-  const onSubmit = () => {
-    console.log(`${email} and ${password}`);
+  const onSubmit = async () => {
+    if (validate()) {
+      try {
+        const res = await axios.post(Loginuser, {
+          email: email,
+          password: password,
+        });
+        console.log(res.data);
+        if (res.data.success) {
+          setEmail("");
+          setPassword("");
+          setProfile(res.data.userInfo);
+          setIsLoggedIn(true);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+    setLoginPending(false);
   };
 
   return (
