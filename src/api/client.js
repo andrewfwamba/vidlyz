@@ -2,6 +2,7 @@
 
 import axios from "axios";
 
-baseUrl = "http://localhost:8000";
+const baseUrl = "http://localhost:8000";
 
-axios.post(baseUrl + "api/create-user");
+export const Registeruser = `${baseUrl}/create-user`;
+export const Loginuser = `${baseUrl}/login`;
