@@ -16,34 +16,45 @@ import LoginProvider from "./src/context/loginProvider";
 export default function App() {
   const Stack = createNativeStackNavigator();
   const [loaded, setLoaded] = useState(false);
-  useEffect(() => {
-    // const [fontsLoaded] = useFonts({
-    //   "Poppins-Thin": require("./assets/fonts/Poppins-Thin.ttf"),
-    // });
-    async function loadFonts() {
-      await Font.loadAsync({
-        "Poppins-Thin": require("./assets/fonts/Poppins-Thin.ttf"),
-        "Poppins-ThinItalic": require("./assets/fonts/Poppins-ThinItalic.ttf"),
-        "Poppins-Regular": require("./assets/fonts/Poppins-Regular.ttf"),
-        "Poppins-ExtraLight": require("./assets/fonts/Poppins-ExtraLight.ttf"),
-        "Poppins-ExtraLightItalic": require("./assets/fonts/Poppins-ExtraLightItalic.ttf"),
-        "Poppins-SemiBold": require("./assets/fonts/Poppins-SemiBold.ttf"),
-        "Poppins-Light": require("./assets/fonts/Poppins-Light.ttf"),
-        "Poppins-Black": require("./assets/fonts/Poppins-Black.ttf"),
-        "Poppins-Italic": require("./assets/fonts/Poppins-Italic.ttf"),
-      })
-        .then((res) => {
-          console.log("Fonts loaded successfully!");
-          setLoaded(true);
-        })
-        .catch((Err) => {
-          setLoaded(true);
-          console.log(Err);
-        });
-    }
-
-    loadFonts();
-  }, []);
+  const [fontsLoaded] = useFonts({
+    "Poppins-Thin": require("./assets/fonts/Poppins-Thin.ttf"),
+    "Poppins-ThinItalic": require("./assets/fonts/Poppins-ThinItalic.ttf"),
+    "Poppins-Regular": require("./assets/fonts/Poppins-Regular.ttf"),
+    "Poppins-ExtraLight": require("./assets/fonts/Poppins-ExtraLight.ttf"),
+    "Poppins-ExtraLightItalic": require("./assets/fonts/Poppins-ExtraLightItalic.ttf"),
+    "Poppins-SemiBold": require("./assets/fonts/Poppins-SemiBold.ttf"),
+    "Poppins-Light": require("./assets/fonts/Poppins-Light.ttf"),
+    "Poppins-Black": require("./assets/fonts/Poppins-Black.ttf"),
+    "Poppins-Italic": require("./assets/fonts/Poppins-Italic.ttf"),
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
+  // useEffect(() => {
+  // async function loadFonts() {
+  //   await Font.loadAsync({
+  //     "Poppins-Thin": require("./assets/fonts/Poppins-Thin.ttf"),
+  //     "Poppins-ThinItalic": require("./assets/fonts/Poppins-ThinItalic.ttf"),
+  //     "Poppins-Regular": require("./assets/fonts/Poppins-Regular.ttf"),
+  //     "Poppins-ExtraLight": require("./assets/fonts/Poppins-ExtraLight.ttf"),
+  //     "Poppins-ExtraLightItalic": require("./assets/fonts/Poppins-ExtraLightItalic.ttf"),
+  //     "Poppins-SemiBold": require("./assets/fonts/Poppins-SemiBold.ttf"),
+  //     "Poppins-Light": require("./assets/fonts/Poppins-Light.ttf"),
+  //     "Poppins-Black": require("./assets/fonts/Poppins-Black.ttf"),
+  //     "Poppins-Italic": require("./assets/fonts/Poppins-Italic.ttf"),
+  //   })
+  //     .then((res) => {
+  //       console.log("Fonts loaded successfully!");
+  //       setLoaded(true);
+  //     })
+  //     .catch((Err) => {
+  //       setLoaded(true);
+  //       console.log(Err);
+  //     });
+  // }
+  // loadFonts();
+  // fontsLoaded();
+  // }, []);
   return (
     <LoginProvider>
       <NavigationContainer>
